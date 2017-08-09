@@ -16,7 +16,8 @@ restService.get('/', function (req, res) {
 });
 
 restService.post('/weather', function (req, res) {
-  const location = 'Bangalore';
+  var location = req.body.result && req.body.result.parameters && req.body.result.parameters.city ? req.body.result.parameters.city : 'Bangalore';
+
   axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
         .then(function (response) {
           const lat = response.data.results[0].geometry.location.lat;
