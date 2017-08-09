@@ -30,7 +30,7 @@ restService.post('/weather', function (req, res) {
           res.json({
             speech: `current temperature is ${response.data.currently.temperature} but feels like ${response.data.currently.apparentTemperature}`,
             displayText: `current temperature is ${response.data.currently.temperature} but feels like ${response.data.currently.apparentTemperature}`,
-            source: 'webhook-echo-sample'
+            source: location
           });
         })
         .catch(function (error) {
