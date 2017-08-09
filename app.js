@@ -28,8 +28,10 @@ restService.post('/weather', function (req, res) {
           return axios.get(`https://api.darksky.net/forecast/f254fa805ed7d9b3aeaa0cb19d976867/${lat + ',' + lng}`);
         }).then(function (response) {
           res.json({
-            speech: `current temperature is ${response.data.currently.temperature} but feels like ${response.data.currently.apparentTemperature}`,
-            displayText: `current temperature is ${response.data.currently.temperature} but feels like ${response.data.currently.apparentTemperature}`,
+            speech: `summary:${response.data.daily.summary} 
+            CURRENT TEMP: ${response.data.currently.temperature} `,
+            displayText: `summary:${response.data.daily.summary} 
+            CURRENT TEMP: ${response.data.currently.temperature} `,
             source: location
           });
         })
