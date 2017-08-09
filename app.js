@@ -16,6 +16,7 @@ server.get('/', function (req, res, next) {
 });
 
 server.get('/echo/weather', function (req, res, next) {
+  console.log(req.body.result.parameters.city);
   const location = 'Bangalore';
   axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
         .then(function (response) {
