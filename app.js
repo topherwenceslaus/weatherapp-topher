@@ -1,21 +1,21 @@
-var restify = require('restify');
+
+const express = require('express');
+const bodyParser = require('body-parser');
 var axios = require('axios');
 
+const restService = express();
 
-const server = restify.createServer({
-  name: 'myapp',
-  version: '1.0.0'
-});
-server.use(restify.plugins.acceptParser(server.acceptable));
-server.use(restify.plugins.queryParser());
-server.use(restify.plugins.bodyParser());
+restService.use(bodyParser.urlencoded({
+  extended: true
+}));
 
+restService.use(bodyParser.json());
 
-server.get('/', function (req, res, next) {
-  res.send('welcome home');
+restService.get('/', function (req, res) {
+  res.send('hello');
 });
 
-server.get('/echo/weather', function (req, res, next) {
+restService.post('/weather', function (req, res) {
   const location = 'Bangalore';
   axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}`)
         .then(function (response) {
@@ -25,7 +25,7 @@ server.get('/echo/weather', function (req, res, next) {
 
           return axios.get(`https://api.darksky.net/forecast/f254fa805ed7d9b3aeaa0cb19d976867/${lat + ',' + lng}`);
         }).then(function (response) {
-          res.send({
+          res.json({
             speech: `current temperature is ${response.data.currently.temperature} but feels like ${response.data.currently.apparentTemperature}`,
             displayText: `current temperature is ${response.data.currently.temperature} but feels like ${response.data.currently.apparentTemperature}`,
             source: 'webhook-echo-sample'
@@ -37,6 +37,7 @@ server.get('/echo/weather', function (req, res, next) {
 });
 
 
-server.listen(process.env.PORT || 8000, function () {
-  console.log('%s listening at %s', server.name, server.url);
+restService.listen((process.env.PORT || 8000), function () {
+  console.log('Server up and listening' + process.env.PORT);
 });
+
