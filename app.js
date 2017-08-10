@@ -29,8 +29,8 @@ restService.post('/weather', function (req, res) {
 
           return axios.get(`https://api.darksky.net/forecast/f254fa805ed7d9b3aeaa0cb19d976867/${lat + ',' + lng}?units=auto`);
         }).then(function (response) {
-          let speech = `summary:${response.data.daily.summary} 
-            CURRENT TEMP: ${response.data.currently.temperature};`;
+          let speech = `${response.data.daily.summary}   
+          CURRENT TEMPERATURE: ${response.data.currently.temperature};`;
 
           if (willRain) {
             speech = response.data.currently.icon === 'rain' ? 'Yes!! it will rain for sure. get your umberalla!!!!!' : 'no rain!!! no traffic njoi!!! kana kavo ghar javo';
