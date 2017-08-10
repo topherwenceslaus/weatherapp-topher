@@ -29,7 +29,7 @@ restService.post('/weather', function (req, res) {
 
           return axios.get(`https://api.darksky.net/forecast/f254fa805ed7d9b3aeaa0cb19d976867/${lat + ',' + lng}?units=auto`);
         }).then(function (response) {
-          let speech = `${response.data.daily.summary}   
+          let speech = `${response.data.currently.summary}   
           CURRENT TEMPERATURE: ${response.data.currently.temperature};`;
 
           if (willRain) {
